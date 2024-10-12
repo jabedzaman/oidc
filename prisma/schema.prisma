@@ -1,0 +1,61 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Tenant {
+  id    String @id @default(cuid())
+  realm String @unique
+  name  String
+
+  clients Client[]
+  users   User[]
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime?
+}
+
+model Client {
+  id           Int      @id @default(autoincrement())
+  clientId     String   @unique
+  clientSecret String
+  redirectUris String[]
+  tenantId     String
+
+  tenant Tenant @relation(fields: [tenantId], references: [id])
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime?
+}
+
+model User {
+  id           Int    @id @default(autoincrement())
+  username     String @unique
+  email        String @unique
+  passwordHash String
+  tenantId     String
+
+  OIDCToken OIDCToken[]
+
+  tenant Tenant @relation(fields: [tenantId], references: [id])
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime?
+}
+
+model OIDCToken {
+  id           Int      @id @default(autoincrement())
+  accessToken  String
+  refreshToken String
+  userId       Int
+  expiresAt    DateTime
+
+  user User @relation(fields: [userId], references: [id])
+}

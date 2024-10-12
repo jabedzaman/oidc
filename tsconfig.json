@@ -10,6 +10,20 @@
     "sourceMap": true,
     "outDir": "./dist",
     "baseUrl": "./",
+    "paths": {
+      "@modules/*": [
+        "src/modules/*"
+      ],
+      "@app/*": [
+        "src/app/*"
+      ],
+      "@shared/*": [
+        "src/shared/*"
+      ],
+      "@/*": [
+        "src/*"
+      ]
+    },
     "incremental": true,
     "skipLibCheck": true,
     "strictNullChecks": false,

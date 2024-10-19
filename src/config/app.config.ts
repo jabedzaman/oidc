@@ -8,16 +8,12 @@ type AppConfig = {
     prefix: string;
     version: string;
   };
-  globalPrefix: string;
   http: {
     enable: boolean;
     host: string;
     port: number;
   };
   contact: string;
-  url: {
-    frontend: string;
-  };
 };
 
 export default registerAs(
@@ -30,7 +26,6 @@ export default registerAs(
       prefix: "v",
       version: process.env.HTTP_VERSION ?? "1",
     },
-    globalPrefix: "/api",
     http: {
       enable: process.env.HTTP_ENABLE === "true" || false,
       host: process.env.HTTP_HOST || "0.0.0.0",
@@ -39,8 +34,5 @@ export default registerAs(
         : 8080,
     },
     contact: process.env.APP_CONTACT || "hi@jabed.dev",
-    url: {
-      frontend: process.env.APP_URL || "http://localhost:3000",
-    },
-  }),
+  })
 );

@@ -1,4 +1,5 @@
-import * as os from "os";
+import * as exec from "node:child_process";
+import * as os from "node:os";
 
 export const ip: () => string = () => {
   const networkInterfaces = os.networkInterfaces();
@@ -18,4 +19,20 @@ export const ip: () => string = () => {
   }
 
   return localIP;
+};
+
+export const getLastCommit = () => {
+  return new Promise((resolve, reject) => {
+    exec.exec(
+      'git log -1 --pretty=format:"%H,%an,%ae,%s,%ad"',
+      (error: any, stdout: any, stderr: any) => {
+        if (error) {
+          reject(`Error fetching last commit: ${stderr}`);
+        } else {
+          const [hash, author, email, message, date] = stdout.split(",");
+          resolve({ hash, author, email, message, date });
+        }
+      }
+    );
+  });
 };

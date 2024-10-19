@@ -5,8 +5,8 @@ import { NestFactory } from "@nestjs/core";
 import { NestExpressApplication } from "@nestjs/platform-express";
 import { ip } from "@shared/utils";
 import * as compression from "compression";
-import { Response } from "express";
 import helmet from "helmet";
+import { setupSwagger } from "./swagger";
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule, {
@@ -17,7 +17,6 @@ async function bootstrap() {
   const configService = app.get(ConfigService);
   const name: string = configService.get<string>("app.name");
   const port: number = configService.get<number>("app.http.port");
-  const globalPrefix: string = configService.get<string>("app.globalPrefix");
   const versioningPrefix: string = configService.get<string>(
     "app.versioning.prefix"
   );
@@ -34,7 +33,8 @@ async function bootstrap() {
       forbidUnknownValues: false,
     })
   );
-  app.setGlobalPrefix(globalPrefix);
+  app.useStaticAssets("public");
+  setupSwagger(app);
   if (versionEnable) {
     app.enableVersioning({
       type: VersioningType.URI,
@@ -42,9 +42,6 @@ async function bootstrap() {
       prefix: versioningPrefix,
     });
   }
-  app.getHttpAdapter().get("/", (_, res: Response) => {
-    res.redirect("/api/health");
-  });
   const logger = new Logger(name);
   await app.listen(port, () => {
     logger.log(

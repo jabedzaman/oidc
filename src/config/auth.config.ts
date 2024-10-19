@@ -16,11 +16,11 @@ type AuthConfig = {
 
 const privateKey = readFileSync(
   process.env.PRIVATE_KEY_PATH ?? "./private.pem",
-  "utf8",
+  "utf8"
 );
 const publicKey = readFileSync(
   process.env.PUBLIC_KEY_PATH ?? "./public.pem",
-  "utf8",
+  "utf8"
 );
 
 export default registerAs(
@@ -36,5 +36,5 @@ export default registerAs(
       private: privateKey,
       public: publicKey,
     },
-  }),
+  })
 );

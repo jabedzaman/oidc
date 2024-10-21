@@ -1,4 +1,5 @@
 {
+	"name": "@jabedzaman/oidc",
 	"type": "module",
 	"scripts": {
 		"build": "tsup",
@@ -6,11 +7,20 @@
 	},
 	"dependencies": {
 		"@hono/node-server": "^1.13.2",
-		"hono": "^4.6.5"
+		"@hono/zod-validator": "^0.4.1",
+		"@scalar/hono-api-reference": "^0.5.156",
+		"dotenv": "^16.4.5",
+		"drizzle-orm": "^0.35.2",
+		"hono": "^4.6.5",
+		"pg": "^8.13.0",
+		"zod": "^3.23.8"
 	},
 	"devDependencies": {
 		"@types/node": "^22.7.7",
+		"@types/pg": "^8.11.10",
+		"drizzle-kit": "^0.26.2",
 		"tsup": "^8.3.0",
+		"tsx": "^4.19.1",
 		"typescript": "^5.6.3"
 	}
 }

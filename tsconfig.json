@@ -1,18 +1,13 @@
 {
-    "extends": "./tsconfig.base.json",
-    "compilerOptions": {
-        "baseUrl": "./",
-        "paths": {
-            "~/*": [
-                "./src/*"
-            ]
-        },
-        "checkJs": true
+  "extends": "./tsconfig.base.json",
+  "compilerOptions": {
+    "baseUrl": "./",
+    "paths": {
+      "~/*": ["./src/*"]
     },
-    "include": [
-        "src",
-        "tsup.config.ts",
-        "../reset.d.ts",
-        "prettier.config.mjs"
-    ]
+    "checkJs": true,
+    "jsx": "react-jsx",
+    "jsxImportSource": "hono/jsx"
+  },
+  "include": ["src", "tsup.config.ts", "../reset.d.ts", "prettier.config.mjs"]
 }
